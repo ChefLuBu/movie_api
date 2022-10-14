@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const { reset } = require("nodemon");
+// const { reset } = require("nodemon");
 // const { monitorEventLoopDelay } = require("perf_hooks");
 const Models = require("./models/models");
 const { check, validationResult } = require("express-validator");
@@ -307,7 +307,7 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 8080;
-app = express();
-app.listen("port", PORT,() => {
+
+app.listen(port,() => {
  console.log('Listening on Port ' + port);
 });

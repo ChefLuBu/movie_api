@@ -56,9 +56,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post(
   "/users",
   [
-    check("Username", "Username is required").isLength({ min: 5 }),
+    check("name", "Username is required").isLength({ min: 5 }),
     check(
-      "Username",
+      "name",
       "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("Password", "Password is required").not().isEmpty(),

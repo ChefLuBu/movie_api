@@ -61,7 +61,7 @@ app.post(
       "name",
       "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
-    // check("Password", "Password is required").not().isEmpty(),
+    check("Password", "Password is required").not().isEmpty(),
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
   (req, res) => {
@@ -70,7 +70,7 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-
+    
     let hashedPassword = User.hashPassword(req.body.Password);
 
     User.findOne({ name: req.body.name }).then((user) => {
@@ -79,7 +79,7 @@ app.post(
       } else {
         User.create({
           name: req.body.name,
-          Password: req.body.hashedPassword,
+          Password:"garbage",// req.body.hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         })

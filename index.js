@@ -56,9 +56,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post(
   "/users",
   [
-    check("name", "Username is required").isLength({ min: 5 }),
+    check("Username", "Username is required").isLength({ min: 5 }),
     check(
-      "name",
+      "Username",
       "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
     check("Password", "Password is required").not().isEmpty(),
@@ -73,12 +73,12 @@ app.post(
     
     let hashedPassword = User.hashPassword(req.body.Password);
 
-    User.findOne({ name: req.body.name }).then((user) => {
+    User.findOne({ Username: req.body.Username }).then((user) => {
       if (user) {
-        return res.status(400).send(req.body.name + "already exists");
+        return res.status(400).send(req.body.Username + "already exists");
       } else {
         User.create({
-          Username: req.body.name,
+          Username: req.body.Username,
           Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
@@ -100,7 +100,7 @@ app.put(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { name: req.params.name },
+      { Username: req.params.Username },
       {
         $push: { favoriteMovies: req.params.id },
       },
@@ -187,7 +187,7 @@ app.get(
   "/users/:name",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ name: req.params.name })
+    User.findOne({ Username: req.params.Username })
       .then((results) => res.status(200).json(results))
       .catch((e) => console.error(e));
   }
@@ -214,10 +214,10 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
     User.findOneAndUpdate(
-      { name: req.params.name },
+      { Username: req.params.Username },
       {
         $set: {
-          name: req.body.name,
+          Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
@@ -241,7 +241,7 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { name: req.params.name },
+      { Username: req.params.Username },
       {
         $push: { favoriteMovies: req.params.MovieID },
       },
@@ -265,7 +265,7 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { name: req.params.name },
+      { Username: req.params.Username },
       {
         $pull: { favoriteMovies: req.params.MovieID },
       },
@@ -286,12 +286,12 @@ app.delete(
   "/users/:name",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOneAndRemove({ name: req.params.name })
+    User.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.name + " was not found");
+          res.status(400).send(req.params.Username + " was not found");
         } else {
-          res.status(200).send(req.params.name + " was deleted.");
+          res.status(200).send(req.params.Username + " was deleted.");
         }
       })
       .catch((err) => {

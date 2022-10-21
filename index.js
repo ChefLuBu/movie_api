@@ -127,7 +127,7 @@ app.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
 
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   (req, res) => {
     return Movie.find()
       .then((result) => {

@@ -210,7 +210,7 @@ app.put(
     check("Email", "Email does not appear to be valid").isEmail(),
   ],
   (req, res) => {
-    let hashedPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = User.hashPassword(req.body.Password);
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {

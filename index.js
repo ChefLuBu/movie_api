@@ -217,7 +217,7 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
     User.findOneAndUpdate(
-      { Username: req.params.Username },
+      { Username: req.params.name },
       {
         $set: {
           Username: req.body.Username,

@@ -103,7 +103,9 @@ app.put(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { Username: req.params.name },
+      { Username: req.params.name,
+      Movies: req.params.movies,
+      id: req.params._id},
       {
         $push: { favoriteMovies: req.params.id },
       },
@@ -244,7 +246,7 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { Username: req.params.Username },
+      { Username: req.params.name },
       {
         $push: { favoriteMovies: req.params.MovieID },
       },
@@ -268,7 +270,9 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { Username: req.params.Username },
+      { Username: req.params.name,
+      movies: req.params.movies,
+    MovieID: req.params.MovieID },
       {
         $pull: { favoriteMovies: req.params.MovieID },
       },
@@ -289,12 +293,12 @@ app.delete(
   "/users/:name",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOneAndRemove({ Username: req.params.Username })
+    User.findOneAndRemove({ Username: req.params.name })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.Username + " was not found");
+          res.status(400).send(req.params.name + " was not found");
         } else {
-          res.status(200).send(req.params.Username + " was deleted.");
+          res.status(200).send(req.params.name + " was deleted.");
         }
       })
       .catch((err) => {

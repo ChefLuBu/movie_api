@@ -94,7 +94,8 @@ app.post(
             res.status(500).send("Error: " + error);
           });
       }
-    });
+    })
+    .catch(e=>console.log(e))
   }
 );
 
@@ -136,7 +137,7 @@ app.get(
       .then((result) => {
         res.json(result);
       })
-      .catch(console.log);
+      .catch(e=>console.log(e));
   }
 );
 

@@ -31,7 +31,6 @@ app.use(
 
 const passport = require("passport");
 require("./passport");
-console.log(CONNECTION_URI)
 
 
 mongoose.connect( CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });

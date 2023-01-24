@@ -1,4 +1,4 @@
-const jwtSecret = 'your_jwt_secret'; 
+const {JWT_SECRET}=require("./config")
 
 const jwt = require('jsonwebtoken'),
   passport = require('passport');
@@ -7,7 +7,7 @@ require('./passport');
 
 
 let generateJWTToken = (user) => {
-  return jwt.sign(user, jwtSecret, {
+  return jwt.sign(user, JWT_SECRET, {
     subject: user.Username,
     expiresIn: '7d',
     algorithm: 'HS256' 

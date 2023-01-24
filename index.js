@@ -1,8 +1,8 @@
+require("dotenv").config()
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const { reset } = require("nodemon");
-// const { monitorEventLoopDelay } = require("perf_hooks");
+const { CONNECTION_URI }=require("./config.js")
 const Models = require("./models/models");
 const { check, validationResult } = require("express-validator");
 
@@ -11,7 +11,6 @@ const User = Models.User;
 
 const cors = require("cors");
 let allowedOrigins = ["http://localhost:1234", "http://testsite.com"];
-
 
 app.use(
   cors({
@@ -32,13 +31,10 @@ app.use(
 
 const passport = require("passport");
 require("./passport");
+console.log(CONNECTION_URI)
 
-// mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 

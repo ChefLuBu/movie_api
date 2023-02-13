@@ -15,7 +15,8 @@ let allowedOrigins = [
   "http://localhost:4200",
   "http://testsite.com",
   "https://sage-ganache-861dc5.netlify.app",
-  "https://cheflubu.github.io/myFlix-Angular-client/"
+  "https://cheflubu.github.io/myFlix-Angular-client/",
+  "https://cheflubu.github.io/"
 ];
 
 app.use(

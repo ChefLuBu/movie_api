@@ -1,8 +1,8 @@
-require("dotenv").config()
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const { CONNECTION_URI }=require("./config.js")
+const { CONNECTION_URI } = require("./config.js");
 const Models = require("./models/models");
 const { check, validationResult } = require("express-validator");
 
@@ -10,7 +10,13 @@ const Movie = Models.Movie;
 const User = Models.User;
 
 const cors = require("cors");
-let allowedOrigins = ["http://localhost:1234", "http://localhost:4200", "http://testsite.com", "https://sage-ganache-861dc5.netlify.app"];
+let allowedOrigins = [
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "http://testsite.com",
+  "https://sage-ganache-861dc5.netlify.app",
+  "https://cheflubu.github.io/myFlix-Angular-client/welcome"
+];
 
 app.use(
   cors({
@@ -28,14 +34,13 @@ app.use(
   })
 );
 
-
 const passport = require("passport");
 require("./passport");
 
-
-mongoose.connect( CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
+mongoose.connect(CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 (fs = require("fs")), (path = require("path"));
 bodyParser = require("body-parser");
@@ -48,7 +53,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let auth = require("./auth")(app);
-
 
 //Create
 app.post(
@@ -68,55 +72,58 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    
+
     let hashedPassword = User.hashPassword(req.body.Password);
 
-    User.findOne({ Username: req.body.Username }).then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
-      } else {
-        User.create({
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        })
-          .then((user) => {
-            res.status(201).json(user);
+    User.findOne({ Username: req.body.Username })
+      .then((user) => {
+        if (user) {
+          return res.status(400).send(req.body.Username + "already exists");
+        } else {
+          User.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
           })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
-      }
-    })
-    .catch(e=>console.log(e))
+            .then((user) => {
+              res.status(201).json(user);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((e) => console.log(e));
   }
 );
 
-app.put(
-  "/users/:name/:movies/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    User.findOneAndUpdate(
-      { Username: req.params.name,
-      Movies: req.params.movies,
-      id: req.params._id},
-      {
-        $push: { favoriteMovies: req.params.id },
-      },
-      { new: true }, // This line makes sure that the updated document is returned
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        } else {
-          res.json(updatedUser);
-        }
-      }
-    );
-  }
-);
+// app.put(
+//   "/users/:name/:movies/:id",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     User.findOneAndUpdate(
+//       {
+//         Username: req.params.name,
+//         Movies: req.params.movies,
+//         id: req.params._id,
+//       },
+//       {
+//         $push: { favoriteMovies: req.params.id },
+//       },
+//       { new: true }, // This line makes sure that the updated document is returned
+//       (err, updatedUser) => {
+//         if (err) {
+//           console.error(err);
+//           res.status(500).send("Error: " + err);
+//         } else {
+//           res.json(updatedUser);
+//         }
+//       }
+//     );
+//   }
+// );
 
 //Read
 
@@ -132,7 +139,7 @@ app.get(
       .then((result) => {
         res.json(result);
       })
-      .catch(e=>console.log(e));
+      .catch((e) => console.log(e));
   }
 );
 
@@ -266,9 +273,11 @@ app.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOneAndUpdate(
-      { Username: req.params.name,
-      movies: req.params.movies,
-    MovieID: req.params.MovieID },
+      {
+        Username: req.params.name,
+        movies: req.params.movies,
+        MovieID: req.params.MovieID,
+      },
       {
         $pull: { favoriteMovies: req.params.MovieID },
       },
@@ -313,6 +322,6 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 8080;
 
-app.listen(port,() => {
- console.log('Listening on Port ' + port);
+app.listen(port, () => {
+  console.log("Listening on Port " + port);
 });

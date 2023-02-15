@@ -23,7 +23,7 @@ app.use(
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
-        // If a specific origin isn’t found on the list of allowed origins
+        //  If a specific origin isn’t found on the list of allowed origins fire message
         let message =
           "The CORS policy for this application doesnt allow access from origin " +
           origin;

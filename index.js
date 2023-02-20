@@ -99,33 +99,7 @@ app.post(
   }
 );
 
-// app.put(
-//   "/users/:name/:movies/:id",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     User.findOneAndUpdate(
-//       {
-//         Username: req.params.name,
-//         Movies: req.params.movies,
-//         id: req.params._id,
-//       },
-//       {
-//         $push: { favoriteMovies: req.params.id },
-//       },
-//       { new: true }, // This line makes sure that the updated document is returned
-//       (err, updatedUser) => {
-//         if (err) {
-//           console.error(err);
-//           res.status(500).send("Error: " + err);
-//         } else {
-//           res.json(updatedUser);
-//         }
-//       }
-//     );
-//   }
-// );
 
-//Read
 
 app.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
   res.send("Welcome to my Kung Fu film app!");

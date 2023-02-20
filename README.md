@@ -8,4 +8,8 @@ Get a list of all movies Get film description, genre, director and the film post
 ## Links
 Live Api: https://movie-api-xfet.onrender.com React Client: https://github.com/ChefLuBu/myFlix-client Angular Client: https://github.com/ChefLuBu/myFlix-Angular-client
 
-## Technologies Used Node.js Express MongoDB Mongoose
+## Technologies Used 
+Node.js 
+Express 
+MongoDB 
+Mongoose

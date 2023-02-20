@@ -10,6 +10,9 @@ Live Api: https://movie-api-xfet.onrender.com React Client: https://github.com/C
 
 ## Technologies Used 
 Node.js 
+
 Express 
+
 MongoDB 
+
 Mongoose
